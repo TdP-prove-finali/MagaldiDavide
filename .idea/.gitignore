@@ -1,0 +1,41 @@
+# =============================
+# Python cache / bytecode
+# =============================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =============================
+# Virtual environments
+# =============================
+venv/
+env/
+.env
+
+# =============================
+# IDE / editor
+# =============================
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# =============================
+# Operating system files
+# =============================
+.DS_Store
+Thumbs.db
+
+# =============================
+# Logs / temporary files
+# =============================
+*.log
+*.tmp
+*.bak
+*.swp
+
+# =============================
+# Other project-specific folders
+# =============================
+/shelf/
+/workspace.xml
