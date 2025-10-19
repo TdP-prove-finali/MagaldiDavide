@@ -24,14 +24,14 @@ class DAO():
     def getProducts(store):
         cnx = DBConnect.get_connection()
         cursor = cnx.cursor(dictionary=True)
-        query = """select p.* from(select oi.*, count(distinct year(o.order_date)) as c from order_items oi 
-                    join orders o 
-                    on o.order_id  = oi.order_id 
-                    where o.store_id = %s and (year(o.order_date) = 2016 or year(o.order_date) = 2017)
-                    group by product_id) mytab
-                    join products p 
-                    on p.product_id = mytab.product_id
-                    where c = 2"""
+        query = """select p.* from(select oi.product_id, count(distinct year(o.order_date)) as c from order_items oi 
+            join orders o 
+            on o.order_id  = oi.order_id 
+            where o.store_id = %s and (year(o.order_date) = 2016 or year(o.order_date) = 2017)
+            group by product_id) mytab
+            join products p 
+            on p.product_id = mytab.product_id
+            where c = 2"""
         cursor.execute(query, (store, ))
 
         res = []
@@ -55,12 +55,12 @@ class DAO():
                     on oi.order_id = o.order_id 
                     where o.store_id = %s and (year(o.order_date) = 2016 or year(o.order_date) = 2017)) tab2
                     on tab.oid1 = tab2.oid2 and tab.pid1 < tab2.pid2)
-                    where pid1 in (select product_id from(select oi.*, count(distinct year(o.order_date)) as c from order_items oi 
+                    where pid1 in (select product_id from(select oi.product_id, count(distinct year(o.order_date)) as c from order_items oi 
                     join orders o 
                     on o.order_id  = oi.order_id 
                     where o.store_id = %s and (year(o.order_date) = 2016 or year(o.order_date) = 2017)
                     group by product_id) mytab
-                    where c = 2) and pid2 in (select product_id from(select oi.*, count(distinct year(o.order_date)) as c from order_items oi 
+                    where c = 2) and pid2 in (select product_id from(select oi.product_id, count(distinct year(o.order_date)) as c from order_items oi 
                     join orders o 
                     on o.order_id  = oi.order_id 
                     where o.store_id = %s and (year(o.order_date) = 2016 or year(o.order_date) = 2017)
@@ -106,7 +106,7 @@ class DAO():
                     on p.product_id = oi.product_id 
                     where oi.product_id = %s and store_id = %s and year(order_date) <> %s
                     group by year(order_date), month(order_date), o.store_id, oi.product_id 
-                    order by order_date """
+                    order by year(order_date), month(order_date) """
         cursor.execute(query, (product_id, store_id, current_year))
 
         res = []

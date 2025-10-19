@@ -32,7 +32,8 @@ class Controller:
         if self._selected_algorithm is not None:
             self._view.dd_product.options.clear()
             for p in self._products:
-                self._view.dd_product.options.append(ft.dropdown.Option(key=p.product_id, text=p.product_name, data=p, on_click=self.readProduct))
+                self._view.dd_product.options.append(ft.dropdown.Option(key=p.product_id, text=p.product_name,
+                                                                        data=p, on_click=self.readProduct))
             self._selected_product = self._view.dd_product.value
             if type(self._selected_product) == str:
                 self._selected_product = None
@@ -45,7 +46,8 @@ class Controller:
 
     def fillDDAlgorithm(self):
         self._view.dd_algorithm.options.clear()
-        self._view.dd_algorithm.options.extend([ft.dropdown.Option("Moving Average"), ft.dropdown.Option("Exponential Smoothing"), ft.dropdown.Option("Exponential Smoothing with Trend")])
+        self._view.dd_algorithm.options.extend([ft.dropdown.Option("Moving Average"), ft.dropdown.Option("Exponential Smoothing"),
+                                                ft.dropdown.Option("Exponential Smoothing with Trend")])
 
     def handleAlgorithm(self, e):
         self._selected_algorithm = e.control.value
@@ -61,7 +63,8 @@ class Controller:
         self._view.parameters_row.update()
         self._view.dd_product.options.clear()
         for p in self._products:
-            self._view.dd_product.options.append(ft.dropdown.Option(key=p.product_id, text=p.product_name, data=p, on_click=self.readProduct))
+            self._view.dd_product.options.append(ft.dropdown.Option(key=p.product_id, text=p.product_name,
+                                                                    data=p, on_click=self.readProduct))
         self._view.update_page()
 
     def handleForecast(self, e):
@@ -205,7 +208,8 @@ class Controller:
             self._view.txt_result.controls.append(ft.Text(f"The quarterly stock cost for the sub-inventory with {quantity} units will be {round(stock_cost, 2)}€", weight='bold'))
             self._view.txt_result.controls.append(ft.Text(f"Created in {datetime.now()-time}", size=10, italic=True, color="#555555"))
         else:
-            self._view.txt_result.controls.append(ft.Text("Unfortunately is not possible to find an optimal sub-inventory with the given quantity. Try again with a bigger quantity", color='red'))
+            self._view.txt_result.controls.append(ft.Text("Unfortunately is not possible to find an optimal sub-inventory with the given quantity. Try again with a bigger quantity",
+                                                          color='red'))
         self._view.update_page()
 
     def readProduct(self, e):

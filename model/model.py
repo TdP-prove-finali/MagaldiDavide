@@ -132,8 +132,8 @@ class Model:
         self.min_cost = 100000000
         self.max_score = 0
         self.getStocks()
-        node_list = list(self._graph.nodes)  # add
-        for i, n in enumerate(node_list):  # for n in self._graph.nodes:
+        node_list = list(self._graph.nodes)
+        for i, n in enumerate(node_list):
             if (self.stocks[f"{self.store_id}-{n.product_id}"] <= max_stock
                     and self.stocks[f"{self.store_id}-{n.product_id}"] != 0):
                 partial = [n]
@@ -154,8 +154,8 @@ class Model:
         if self.getStockCost(partial) >= self.min_cost:
             return
 
-        for i in range(start_index, len(self._graph.nodes)):  # for n in self._graph.nodes:
-            n = list(self._graph.nodes)[i]  #add
+        for i in range(start_index, len(self._graph.nodes)):
+            n = list(self._graph.nodes)[i]
             if (n not in partial
                     and self.getStocked(partial)+self.stocks[f"{self.store_id}-{n.product_id}"] <= max_stock
                     and self.stocks[f"{self.store_id}-{n.product_id}"] > 0):
