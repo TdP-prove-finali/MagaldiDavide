@@ -34,6 +34,7 @@ class Model:
 
     def buildGraph(self, store_id):
         self.store_id = store_id
+        self._product_idMap = {}
         for p in self._products:
             self._product_idMap[p.product_id] = p
         self._graph.clear()
@@ -141,14 +142,15 @@ class Model:
         return self.best_sol, self.min_cost, self.getStocked(self.best_sol)
 
     def findNext(self, partial, min_stock, max_stock, start_index=0):
-        if min_stock <= self.getStocked(partial) <= max_stock:
+        stock = self.getStocked(partial)
+        if min_stock <= stock <= max_stock:
             cost = self.getStockCost(partial)
             score = self.getScore(partial)
-            if cost < self.min_cost and score > self.max_score:
+            if cost <= self.min_cost and score >= self.max_score:
                 self.best_sol = copy.deepcopy(partial)
                 self.min_cost = cost
                 self.max_score = score
-            return
+                return
 
         # pruning
         if self.getStockCost(partial) >= self.min_cost:
